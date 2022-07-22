@@ -21,20 +21,17 @@ configure_file(
 
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt" DESTINATION "${SOURCE_PATH}")
 
-vcpkg_cmake_configure(
+vcpkg_configure_cmake(
     SOURCE_PATH "${SOURCE_PATH}"
 )
 
 vcpkg_cmake_install()
+vcpkg_install_cmake()
+# vcpkg_fixup_cmake_targets()
 
-file(GLOB HEADERS
-    "${SOURCE_PATH}/BasicUsageEnvironment/include/*.h*"
-    "${SOURCE_PATH}/groupsock/include/*.h*"
-    "${SOURCE_PATH}/liveMedia/include/*.h*"
-    "${SOURCE_PATH}/UsageEnvironment/include/*.h*"
-)
+# file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 
-file(COPY ${HEADERS} DESTINATION "${CURRENT_PACKAGES_DIR}/include")
-file(INSTALL "${SOURCE_PATH}/COPYING" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
-
-vcpkg_copy_pdbs()
+file(
+  INSTALL "${SOURCE_PATH}/COPYING"
+  DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}"
+  RENAME copyright)

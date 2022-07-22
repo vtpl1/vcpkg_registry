@@ -97,3 +97,16 @@ install(
         ${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake
     DESTINATION
         ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
+
+file(GLOB HEADERS
+        BasicUsageEnvironment/include/*.h*
+        groupsock/include/*.h*
+        liveMedia/include/*.h*
+        UsageEnvironment/include/*.h*
+)
+
+install(
+    FILES
+        ${HEADERS}
+        # ${PROJECT_BINARY_DIR}/version.h
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME})
