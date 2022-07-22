@@ -13,6 +13,12 @@ vcpkg_extract_source_archive_ex(
     #     fix-RTSPClient.patch
 )
 
+configure_file(
+    ${CMAKE_CURRENT_LIST_DIR}/config.cmake.in
+    ${SOURCE_PATH}/cmake/config.cmake.in
+    COPYONLY
+)
+
 file(COPY "${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt" DESTINATION "${SOURCE_PATH}")
 
 vcpkg_cmake_configure(
