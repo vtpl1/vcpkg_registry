@@ -35,6 +35,11 @@ set_target_properties(
 		SOVERSION	${PROJECT_VERSION_MAJOR}
 		VERSION     ${PROJECT_VERSION})
 
+target_compile_definitions(groupsock
+    PUBLIC -DSOCKLEN_T=socklen_t
+    PUBLIC -D_LARGEFILE_SOURCE=1
+    PUBLIC -D_FILE_OFFSET_BITS=64)
+
 if (MSVC)
 target_compile_definitions(groupsock
     PUBLIC NO_GETIFADDRS
