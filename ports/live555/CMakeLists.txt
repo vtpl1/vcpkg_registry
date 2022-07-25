@@ -9,6 +9,7 @@ project(live555
 	LANGUAGES C CXX)
 
 include(GNUInstallDirs)
+
 file(GLOB GROUPSOCK_HDRS groupsock/include/*.h*)
 file(GLOB GROUPSOCK_SRCS groupsock/*.c groupsock/*.cpp)
 
@@ -20,7 +21,7 @@ target_include_directories(groupsock
     PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/groupsock/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
-    PRIVATE 
+    PRIVATE
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/UsageEnvironment/include>
         $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
 )
@@ -67,11 +68,11 @@ target_include_directories(UsageEnvironment
 )
 
 target_link_libraries(UsageEnvironment
-	PUBLIC groupsock
+    PUBLIC groupsock
 )
 
 file(GLOB BASIC_USAGE_ENVIRONMENT_HDRS BasicUsageEnvironment/include/*.h*)
-file(GLOB BASIC_USAGE_ENVIRONMENT_SRCS BasicUsageEnvironment/*.c UsageEnvironment/*.cpp)
+file(GLOB BASIC_USAGE_ENVIRONMENT_SRCS BasicUsageEnvironment/*.c BasicUsageEnvironment/*.cpp)
 
 add_library(BasicUsageEnvironment
 	${BASIC_USAGE_ENVIRONMENT_SRCS}
@@ -84,8 +85,9 @@ target_include_directories(BasicUsageEnvironment
 )
 
 target_link_libraries(BasicUsageEnvironment
-	PUBLIC UsageEnvironment
+    PUBLIC UsageEnvironment
 )
+
 
 find_package(OpenSSL REQUIRED)
 
@@ -104,12 +106,13 @@ target_include_directories(liveMedia
 )
 
 target_link_libraries(liveMedia
-	PUBLIC BasicUsageEnvironment
+    PUBLIC BasicUsageEnvironment
     PUBLIC UsageEnvironment
     PUBLIC groupsock
     PUBLIC OpenSSL::SSL
     PUBLIC OpenSSL::Crypto
 )
+
 
 ## Install library + targets ##################################################
 include(CMakePackageConfigHelpers)
@@ -125,7 +128,7 @@ install(TARGETS groupsock UsageEnvironment BasicUsageEnvironment liveMedia
 
     	# ... and the import lib into the devel package
 	ARCHIVE DESTINATION     ${CMAKE_INSTALL_LIBDIR}
-        COMPONENT			${PROJECT_NAME}_Development    
+        COMPONENT			${PROJECT_NAME}_Development
 )
 
 install(EXPORT ${PROJECT_NAME}-targets
