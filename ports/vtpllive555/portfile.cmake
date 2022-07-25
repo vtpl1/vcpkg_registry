@@ -69,6 +69,9 @@ vcpkg_cmake_configure(
     # OPTIONS_DEBUG -DDEBUGGABLE=1
 )
 
+file(COPY "${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt" DESTINATION "${SOURCE_PATH}")
+file(COPY "${CMAKE_CURRENT_LIST_DIR}/cmake/config.cmake.in" DESTINATION "${SOURCE_PATH}/cmake/config.cmake.in")
+
 vcpkg_cmake_install()
 
 # # Moves all .cmake files from /debug/share/vtpllive555/ to /share/vtpllive555/

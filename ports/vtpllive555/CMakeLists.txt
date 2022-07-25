@@ -1,16 +1,20 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.15)
+
 set(VERSION 2022.07.14)
 
-project(live555 
-    VERSION ${VERSION}
-    LANGUAGES C CXX)
+project(live555
+	VERSION ${VERSION}
+	DESCRIPTION "A simple wrapper around spdlog"
+	HOMEPAGE_URL "https://github.com/vtpl1/logutil"
+	LANGUAGES C CXX)
 
-
+include(GNUInstallDirs)
 file(GLOB GROUPSOCK_HDRS groupsock/include/*.hh)
-
 file(GLOB GROUPSOCK_SRCS groupsock/*.c groupsock/*.cpp)
-    
-add_library(groupsock ${GROUPSOCK_SRCS})
+
+add_library(groupsock
+	${GROUPSOCK_SRCS}
+)
 
 target_include_directories(groupsock
     PUBLIC
@@ -30,7 +34,6 @@ set_target_properties(
 		SOVERSION	${PROJECT_VERSION_MAJOR}
 		VERSION     ${PROJECT_VERSION})
 
-
 if (MSVC)
 target_compile_definitions(groupsock
     PUBLIC NO_GETIFADDRS
@@ -47,38 +50,62 @@ target_compile_options(groupsock
 )
 endif()
 
-# file(GLOB USAGE_ENVIRONMENT_HDRS UsageEnvironment/include/*.hh)
+file(GLOB USAGE_ENVIRONMENT_HDRS UsageEnvironment/include/*.hh)
+file(GLOB USAGE_ENVIRONMENT_SRCS UsageEnvironment/*.c UsageEnvironment/*.cpp)
 
-# file(GLOB USAGE_ENVIRONMENT_SRCS UsageEnvironment/*.c UsageEnvironment/*.cpp)
-    
-# add_library(UsageEnvironment ${USAGE_ENVIRONMENT_SRCS})
+add_library(UsageEnvironment
+	${USAGE_ENVIRONMENT_SRCS}
+)
 
-# target_include_directories(UsageEnvironment
-#     PUBLIC UsageEnvironment/include
-# )
+target_include_directories(UsageEnvironment
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/UsageEnvironment/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+)
 
-# target_link_libraries(UsageEnvironment
-#     PUBLIC groupsock
-# )
+target_link_libraries(UsageEnvironment
+	PUBLIC groupsock
+)
 
-# file(GLOB BASIC_USAGE_ENVIRONMENT_HDRS UsageEnvironment/include/*.hh)
+file(GLOB BASIC_USAGE_ENVIRONMENT_HDRS BasicUsageEnvironment/include/*.hh)
+file(GLOB BASIC_USAGE_ENVIRONMENT_SRCS BasicUsageEnvironment/*.c UsageEnvironment/*.cpp)
 
-# file(GLOB BASIC_USAGE_ENVIRONMENT_SRCS UsageEnvironment/*.c UsageEnvironment/*.cpp)
+add_library(BasicUsageEnvironment
+	${BASIC_USAGE_ENVIRONMENT_SRCS}
+)
 
-# add_library(BasicUsageEnvironment ${BASIC_USAGE_ENVIRONMENT_SRCS})
+target_include_directories(BasicUsageEnvironment
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/BasicUsageEnvironment/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+)
 
-# target_include_directories(BasicUsageEnvironment
-#     PUBLIC BasicUsageEnvironment/include
-# )
+target_link_libraries(BasicUsageEnvironment
+	PUBLIC UsageEnvironment
+)
 
-# target_link_libraries(BasicUsageEnvironment
-#     PUBLIC UsageEnvironment
-# )
+file(GLOB LIVE_MEDIA_HDRS liveMedia/include/*.hh)
+file(GLOB LIVE_MEDIA_SRCS liveMedia/*.c liveMedia/*.cpp)
+
+
+add_library(liveMedia
+	${LIVE_MEDIA_SRCS}
+)
+
+target_include_directories(liveMedia
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/liveMedia/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+)
+
+target_link_libraries(liveMedia
+	PUBLIC BasicUsageEnvironment
+)
 
 ## Install library + targets ##################################################
 include(CMakePackageConfigHelpers)
 
-install(TARGETS groupsock
+install(TARGETS groupsock UsageEnvironment BasicUsageEnvironment liveMedia
     EXPORT ${PROJECT_NAME}-targets
     RUNTIME DESTINATION     ${CMAKE_INSTALL_BINDIR}
         COMPONENT			${PROJECT_NAME}_Runtime
@@ -97,8 +124,7 @@ install(EXPORT ${PROJECT_NAME}-targets
 	NAMESPACE   ${PROJECT_NAME}::
 )
 
-
-install(TARGETS groupsock
+install(TARGETS groupsock UsageEnvironment BasicUsageEnvironment liveMedia
 	# on Windows put the dlls into bin
 	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 		COMPONENT			${PROJECT_NAME}_Runtime
@@ -112,10 +138,7 @@ install(TARGETS groupsock
 		COMPONENT			${PROJECT_NAME}_Development
 )
 
-# file(COPY "${CMAKE_CURRENT_LIST_DIR}/config.cmake.in" DESTINATION "${SOURCE_PATH}")
-
-configure_package_config_file(
-	${PROJECT_SOURCE_DIR}/cmake/config.cmake.in
+configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/config.cmake.in
 	${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
 	INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
 	NO_SET_AND_CHECK_MACRO)
@@ -132,12 +155,7 @@ install(
     DESTINATION
         ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
-# file(GLOB HEADERS
-#         BasicUsageEnvironment/include/*.h*
-#         groupsock/include/*.h*
-#         liveMedia/include/*.h*
-#         UsageEnvironment/include/*.h*
-# )
+list (APPEND HEADERS ${GROUPSOCK_HDRS} ${USAGE_ENVIRONMENT_HDRS} ${BASIC_USAGE_ENVIRONMENT_HDRS} ${LIVE_MEDIA_HDRS})
 
 install(
     FILES
