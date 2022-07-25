@@ -9,7 +9,7 @@ project(live555
 	LANGUAGES C CXX)
 
 include(GNUInstallDirs)
-file(GLOB GROUPSOCK_HDRS groupsock/include/*.hh)
+file(GLOB GROUPSOCK_HDRS groupsock/include/*.h*)
 file(GLOB GROUPSOCK_SRCS groupsock/*.c groupsock/*.cpp)
 
 add_library(groupsock
@@ -53,7 +53,7 @@ target_compile_options(groupsock
 )
 endif()
 
-file(GLOB USAGE_ENVIRONMENT_HDRS UsageEnvironment/include/*.hh)
+file(GLOB USAGE_ENVIRONMENT_HDRS UsageEnvironment/include/*.h*)
 file(GLOB USAGE_ENVIRONMENT_SRCS UsageEnvironment/*.c UsageEnvironment/*.cpp)
 
 add_library(UsageEnvironment
@@ -70,7 +70,7 @@ target_link_libraries(UsageEnvironment
 	PUBLIC groupsock
 )
 
-file(GLOB BASIC_USAGE_ENVIRONMENT_HDRS BasicUsageEnvironment/include/*.hh)
+file(GLOB BASIC_USAGE_ENVIRONMENT_HDRS BasicUsageEnvironment/include/*.h*)
 file(GLOB BASIC_USAGE_ENVIRONMENT_SRCS BasicUsageEnvironment/*.c UsageEnvironment/*.cpp)
 
 add_library(BasicUsageEnvironment
@@ -89,7 +89,7 @@ target_link_libraries(BasicUsageEnvironment
 
 find_package(OpenSSL REQUIRED)
 
-file(GLOB LIVE_MEDIA_HDRS liveMedia/include/*.hh)
+file(GLOB LIVE_MEDIA_HDRS liveMedia/include/*.h*)
 file(GLOB LIVE_MEDIA_SRCS liveMedia/*.c liveMedia/*.cpp)
 
 
