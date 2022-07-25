@@ -83,7 +83,8 @@ vcpkg_cmake_install()
 #    "name": "vcpkg-cmake-config",
 #    "host": true
 #}
-vcpkg_cmake_config_fixup(CONFIG_PATH cmake TARGET_PATH share/live555)
+# vcpkg_cmake_config_fixup(CONFIG_PATH cmake TARGET_PATH share/live555)
+vcpkg_fixup_cmake_targets()
 
 # Uncomment the line below if necessary to install the license file for the port
 # as a file named `copyright` to the directory `${CURRENT_PACKAGES_DIR}/share/${PORT}`
