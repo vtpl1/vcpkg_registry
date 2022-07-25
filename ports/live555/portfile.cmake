@@ -76,14 +76,14 @@ vcpkg_cmake_configure(
 
 vcpkg_cmake_install()
 
-# # Moves all .cmake files from /debug/share/vtpllive555/ to /share/vtpllive555/
+# # Moves all .cmake files from /debug/share/live555/ to /share/live555/
 # # See /docs/maintainers/ports/vcpkg-cmake-config/vcpkg_cmake_config_fixup.md for more details
 # When you uncomment "vcpkg_cmake_config_fixup()", you need to add the following to "dependencies" vcpkg.json:
 #{
 #    "name": "vcpkg-cmake-config",
 #    "host": true
 #}
-vcpkg_cmake_config_fixup(CONFIG_PATH cmake TARGET_PATH share/vtpllive555)
+vcpkg_cmake_config_fixup(CONFIG_PATH cmake TARGET_PATH share/live555)
 
 # Uncomment the line below if necessary to install the license file for the port
 # as a file named `copyright` to the directory `${CURRENT_PACKAGES_DIR}/share/${PORT}`
