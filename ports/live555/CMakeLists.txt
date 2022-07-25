@@ -1,51 +1,120 @@
-cmake_minimum_required(VERSION 3.5)
-set(VERSION 2022.07.14)
-project(live555 
-    VERSION ${VERSION}
-    LANGUAGES C CXX)
+cmake_minimum_required(VERSION 3.15)
 
-include_directories(
-    BasicUsageEnvironment/include
-    groupsock/include
-    liveMedia/include
-    UsageEnvironment/include
+set(VERSION 2022.07.14)
+
+project(live555
+	VERSION ${VERSION}
+	DESCRIPTION "A complete RTSP server application"
+	HOMEPAGE_URL "https://www.live555.com/liveMedia"
+	LANGUAGES C CXX)
+
+include(GNUInstallDirs)
+file(GLOB GROUPSOCK_HDRS groupsock/include/*.hh)
+file(GLOB GROUPSOCK_SRCS groupsock/*.c groupsock/*.cpp)
+
+add_library(groupsock
+	${GROUPSOCK_SRCS}
 )
 
-if (WIN32)
-    add_definitions(-DNO_GETIFADDRS)
-endif(WIN32)
+target_include_directories(groupsock
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/groupsock/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+    PRIVATE 
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/UsageEnvironment/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+)
 
-if (NOT MSVC)
-    add_compile_options(-DSOCKLEN_T=socklen_t)
+set_target_properties(
+	groupsock PROPERTIES
+		POSITION_INDEPENDENT_CODE ON)
+
+set_target_properties(
+	groupsock PROPERTIES
+		SOVERSION	${PROJECT_VERSION_MAJOR}
+		VERSION     ${PROJECT_VERSION})
+
+if (MSVC)
+target_compile_definitions(groupsock
+    PUBLIC NO_GETIFADDRS
+    PRIVATE _CRT_SECURE_NO_WARNINGS
+    PRIVATE _WINSOCK_DEPRECATED_NO_WARNINGS
+)
+target_compile_options(groupsock
+    PRIVATE /wd4244
+    PRIVATE /wd4312
+)
+target_link_libraries(groupsock
+    PUBLIC ws2_32
+)
+else()
+target_compile_options(groupsock
+    PRIVATE -Wno-int-to-pointer-cast
+)
 endif()
 
-file(GLOB BASIC_USAGE_ENVIRONMENT_SRCS BasicUsageEnvironment/*.c BasicUsageEnvironment/*.cpp)
-add_library(BasicUsageEnvironment ${BASIC_USAGE_ENVIRONMENT_SRCS})
-
-file(GLOB GROUPSOCK_SRCS groupsock/*.c groupsock/*.cpp)
-add_library(groupsock ${GROUPSOCK_SRCS})
-
-file(GLOB LIVEMEDIA_SRCS liveMedia/*.c liveMedia/*.cpp)
-add_library(liveMedia ${LIVEMEDIA_SRCS})
-find_package(OpenSSL REQUIRED)
-target_include_directories(liveMedia PRIVATE "${OPENSSL_INCLUDE_DIR}")
-
+file(GLOB USAGE_ENVIRONMENT_HDRS UsageEnvironment/include/*.hh)
 file(GLOB USAGE_ENVIRONMENT_SRCS UsageEnvironment/*.c UsageEnvironment/*.cpp)
-add_library(UsageEnvironment ${USAGE_ENVIRONMENT_SRCS})
 
-# add_library(${PROJECT_NAME}::core INTERFACE)
+add_library(UsageEnvironment
+	${USAGE_ENVIRONMENT_SRCS}
+)
 
-# target_link_libraries(${PROJECT_NAME}::core
-#     PUBLIC groupsock
-#     PUBLIC BasicUsageEnvironment
-#     PUBLIC liveMedia
-#     PUBLIC UsageEnvironment
-# )
+target_include_directories(UsageEnvironment
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/UsageEnvironment/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+)
+
+target_link_libraries(UsageEnvironment
+	PUBLIC groupsock
+)
+
+file(GLOB BASIC_USAGE_ENVIRONMENT_HDRS BasicUsageEnvironment/include/*.hh)
+file(GLOB BASIC_USAGE_ENVIRONMENT_SRCS BasicUsageEnvironment/*.c UsageEnvironment/*.cpp)
+
+add_library(BasicUsageEnvironment
+	${BASIC_USAGE_ENVIRONMENT_SRCS}
+)
+
+target_include_directories(BasicUsageEnvironment
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/BasicUsageEnvironment/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+)
+
+target_link_libraries(BasicUsageEnvironment
+	PUBLIC UsageEnvironment
+)
+
+find_package(OpenSSL REQUIRED)
+
+file(GLOB LIVE_MEDIA_HDRS liveMedia/include/*.hh)
+file(GLOB LIVE_MEDIA_SRCS liveMedia/*.c liveMedia/*.cpp)
+
+
+add_library(liveMedia
+	${LIVE_MEDIA_SRCS}
+)
+
+target_include_directories(liveMedia
+    PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/liveMedia/include>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}>
+)
+
+target_link_libraries(liveMedia
+	PUBLIC BasicUsageEnvironment
+    PUBLIC UsageEnvironment
+    PUBLIC groupsock
+    PUBLIC OpenSSL::SSL
+    PUBLIC OpenSSL::Crypto
+)
 
 ## Install library + targets ##################################################
 include(CMakePackageConfigHelpers)
 
-install(TARGETS groupsock BasicUsageEnvironment liveMedia UsageEnvironment
+install(TARGETS groupsock UsageEnvironment BasicUsageEnvironment liveMedia
     EXPORT ${PROJECT_NAME}-targets
     RUNTIME DESTINATION     ${CMAKE_INSTALL_BINDIR}
         COMPONENT			${PROJECT_NAME}_Runtime
@@ -59,12 +128,12 @@ install(TARGETS groupsock BasicUsageEnvironment liveMedia UsageEnvironment
         COMPONENT			${PROJECT_NAME}_Development    
 )
 
-install(EXPORT  ${PROJECT_NAME}-targets
+install(EXPORT ${PROJECT_NAME}-targets
 	DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
-	NAMESPACE  ${PROJECT_NAME}::)
+	NAMESPACE   ${PROJECT_NAME}::
+)
 
-
-install(TARGETS groupsock BasicUsageEnvironment liveMedia UsageEnvironment
+install(TARGETS groupsock UsageEnvironment BasicUsageEnvironment liveMedia
 	# on Windows put the dlls into bin
 	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 		COMPONENT			${PROJECT_NAME}_Runtime
@@ -78,10 +147,7 @@ install(TARGETS groupsock BasicUsageEnvironment liveMedia UsageEnvironment
 		COMPONENT			${PROJECT_NAME}_Development
 )
 
-# file(COPY "${CMAKE_CURRENT_LIST_DIR}/config.cmake.in" DESTINATION "${SOURCE_PATH}")
-
-configure_package_config_file(
-	cmake/config.cmake.in
+configure_package_config_file(${PROJECT_SOURCE_DIR}/cmake/config.cmake.in
 	${PROJECT_BINARY_DIR}/${PROJECT_NAME}-config.cmake
 	INSTALL_DESTINATION ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME}
 	NO_SET_AND_CHECK_MACRO)
@@ -98,12 +164,7 @@ install(
     DESTINATION
         ${CMAKE_INSTALL_DATADIR}/${PROJECT_NAME})
 
-file(GLOB HEADERS
-        BasicUsageEnvironment/include/*.h*
-        groupsock/include/*.h*
-        liveMedia/include/*.h*
-        UsageEnvironment/include/*.h*
-)
+list (APPEND HEADERS ${GROUPSOCK_HDRS} ${USAGE_ENVIRONMENT_HDRS} ${BASIC_USAGE_ENVIRONMENT_HDRS} ${LIVE_MEDIA_HDRS})
 
 install(
     FILES

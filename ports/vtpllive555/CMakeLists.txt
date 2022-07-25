@@ -44,6 +44,9 @@ target_compile_options(groupsock
     PRIVATE /wd4244
     PRIVATE /wd4312
 )
+target_link_libraries(groupsock
+    PUBLIC ws2_32
+)
 else()
 target_compile_options(groupsock
     PRIVATE -Wno-int-to-pointer-cast
@@ -84,6 +87,8 @@ target_link_libraries(BasicUsageEnvironment
 	PUBLIC UsageEnvironment
 )
 
+find_package(OpenSSL REQUIRED)
+
 file(GLOB LIVE_MEDIA_HDRS liveMedia/include/*.hh)
 file(GLOB LIVE_MEDIA_SRCS liveMedia/*.c liveMedia/*.cpp)
 
@@ -100,6 +105,10 @@ target_include_directories(liveMedia
 
 target_link_libraries(liveMedia
 	PUBLIC BasicUsageEnvironment
+    PUBLIC UsageEnvironment
+    PUBLIC groupsock
+    PUBLIC OpenSSL::SSL
+    PUBLIC OpenSSL::Crypto
 )
 
 ## Install library + targets ##################################################

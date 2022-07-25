@@ -29,6 +29,8 @@
 #
 # 	See additional helpful variables in /docs/maintainers/vcpkg_common_definitions.md
 
+vcpkg_check_linkage(ONLY_STATIC_LIBRARY) 
+
 # Also consider vcpkg_from_* functions if you can; the generated code here is for any web accessable
 # source archive.
 #  vcpkg_from_github
@@ -53,6 +55,9 @@ vcpkg_extract_source_archive_ex(
     #   002_more_port_fixes.patch
 )
 
+file(COPY "${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt" DESTINATION "${SOURCE_PATH}")
+file(COPY "${CMAKE_CURRENT_LIST_DIR}/cmake/config.cmake.in" DESTINATION "${SOURCE_PATH}/cmake/")
+
 # # Check if one or more features are a part of a package installation.
 # # See /docs/maintainers/vcpkg_check_features.md for more details
 # vcpkg_check_features(OUT_FEATURE_OPTIONS FEATURE_OPTIONS
@@ -68,9 +73,6 @@ vcpkg_cmake_configure(
     # OPTIONS_RELEASE -DOPTIMIZE=1
     # OPTIONS_DEBUG -DDEBUGGABLE=1
 )
-
-file(COPY "${CMAKE_CURRENT_LIST_DIR}/CMakeLists.txt" DESTINATION "${SOURCE_PATH}")
-file(COPY "${CMAKE_CURRENT_LIST_DIR}/cmake/config.cmake.in" DESTINATION "${SOURCE_PATH}/cmake/config.cmake.in")
 
 vcpkg_cmake_install()
 
