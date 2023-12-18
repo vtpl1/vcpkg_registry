@@ -23,6 +23,10 @@
         "queueutil": {
             "baseline": "1.0.2",
             "port-version": 0
+        },
+        "fpsutil": {
+            "baseline": "1.0.7",
+            "port-version": 0
         }
     }
 }
