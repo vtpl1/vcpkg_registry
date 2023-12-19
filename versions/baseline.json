@@ -1,9 +1,5 @@
 {
     "default": {
-        "httpserver": {
-            "baseline": "1.0.0",
-            "port-version": 0
-        },
         "envutil": {
             "baseline": "1.0.4",
             "port-version": 0
@@ -12,20 +8,24 @@
             "baseline": "1.0.2",
             "port-version": 0
         },
+        "fpsutil": {
+            "baseline": "1.0.9",
+            "port-version": 0
+        },
+        "httpserver": {
+            "baseline": "1.0.0",
+            "port-version": 0
+        },
         "logutil": {
             "baseline": "1.10.0",
             "port-version": 0
         },
+        "queueutil": {
+            "baseline": "1.0.3",
+            "port-version": 0
+        },
         "vtpllive555": {
             "baseline": "2022-07-14",
-            "port-version": 0
-        },
-        "queueutil": {
-            "baseline": "1.0.2",
-            "port-version": 0
-        },
-        "fpsutil": {
-            "baseline": "1.0.8",
             "port-version": 0
         }
     }
