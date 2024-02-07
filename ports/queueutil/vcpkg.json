@@ -1,6 +1,9 @@
 {
   "name": "queueutil",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "description": "Queue util",
-  "homepage": "http://github.com/queueutil"
+  "homepage": "http://github.com/queueutil",
+  "dependencies": [
+    "abseil"
+  ]
 }
