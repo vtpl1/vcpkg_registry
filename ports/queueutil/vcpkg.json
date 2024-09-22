@@ -3,5 +3,7 @@
   "version": "3.2.0",
   "description": "Queue util",
   "homepage": "http://github.com/queueutil",
-  "dependencies": ["abseil"]
+  "dependencies": [
+    "abseil"
+  ]
 }

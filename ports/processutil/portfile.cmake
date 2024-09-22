@@ -1,7 +1,7 @@
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO vtpl1/processutil
-  REF v1.1.0
+  REF "v${VERSION}"
   SHA512 09183414828b860241b17945b26b2c260e42a2f5a558a4c53d8e8050c8e65d2c0e25ed5afe463ebe2da3c2fe9df79fa51d26b0abea116c2554a5164014ad56e3
   HEAD_REF main
 )

@@ -1,7 +1,7 @@
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO vtpl1/fileutil
-  REF v1.3.0
+  REF "v${VERSION}"
   SHA512 66978025334d0a29d312110b1738e3c18eae54c84584dc8356856cc7f0a3b0e4cbc29b53ca9b9819d96f2834ea9ffe6eddb2212080b28cf0fb0cdba7a7e24c9a
   HEAD_REF main
 )

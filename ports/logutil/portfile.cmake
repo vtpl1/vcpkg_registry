@@ -1,7 +1,7 @@
 vcpkg_from_github(
   OUT_SOURCE_PATH SOURCE_PATH
   REPO vtpl1/logutil
-  REF v2.0.0
+  REF "v${VERSION}"
   SHA512 2abae30b8f25bcf0fa2ad5795b56bc1dd1a6ae7e6b5be3409119b5ff3637823546af7079ad923e080f2d537bd3d0147c1694e2e8cf6deddfcd3c870dbfd1bdb5
   HEAD_REF main
 )
