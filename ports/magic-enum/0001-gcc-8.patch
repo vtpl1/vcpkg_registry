@@ -1,0 +1,55 @@
+diff -ur magic_enum-0.9.6/include/magic_enum/magic_enum.hpp magic_enum-0.9.6_desired/include/magic_enum/magic_enum.hpp
+--- magic_enum-0.9.6/include/magic_enum/magic_enum.hpp	2024-06-29 19:47:06.000000000 +0530
++++ magic_enum-0.9.6_desired/include/magic_enum/magic_enum.hpp	2024-09-22 21:34:33.227592099 +0530
+@@ -87,13 +87,13 @@
+ #endif
+ 
+ // Checks magic_enum compiler compatibility.
+-#if defined(__clang__) && __clang_major__ >= 5 || defined(__GNUC__) && __GNUC__ >= 9 || defined(_MSC_VER) && _MSC_VER >= 1910 || defined(__RESHARPER__)
++#if defined(__clang__) && __clang_major__ >= 5 || defined(__GNUC__) && __GNUC__ >= 8 || defined(_MSC_VER) && _MSC_VER >= 1910 || defined(__RESHARPER__)
+ #  undef  MAGIC_ENUM_SUPPORTED
+ #  define MAGIC_ENUM_SUPPORTED 1
+ #endif
+ 
+ // Checks magic_enum compiler aliases compatibility.
+-#if defined(__clang__) && __clang_major__ >= 5 || defined(__GNUC__) && __GNUC__ >= 9 || defined(_MSC_VER) && _MSC_VER >= 1920
++#if defined(__clang__) && __clang_major__ >= 5 || defined(__GNUC__) && __GNUC__ >= 8 || defined(_MSC_VER) && _MSC_VER >= 1920
+ #  undef  MAGIC_ENUM_SUPPORTED_ALIASES
+ #  define MAGIC_ENUM_SUPPORTED_ALIASES 1
+ #endif
+diff -ur magic_enum-0.9.6/README.md magic_enum-0.9.6_desired/README.md
+--- magic_enum-0.9.6/README.md	2024-06-29 19:47:06.000000000 +0530
++++ magic_enum-0.9.6_desired/README.md	2024-09-22 21:33:04.290183693 +0530
+@@ -341,7 +341,7 @@
+ * Clang/LLVM >= 5
+ * MSVC++ >= 14.11 / Visual Studio >= 2017
+ * Xcode >= 10
+-* GCC >= 9
++* GCC >= 8
+ * MinGW >= 9
+ 
+ ## Licensed under the [MIT License](LICENSE)
+diff -ur magic_enum-0.9.6/test/test.cpp magic_enum-0.9.6_desired/test/test.cpp
+--- magic_enum-0.9.6/test/test.cpp	2024-06-29 19:47:06.000000000 +0530
++++ magic_enum-0.9.6_desired/test/test.cpp	2024-09-22 21:34:33.232592122 +0530
+@@ -1100,7 +1100,7 @@
+   }
+ }
+ 
+-#if defined(__clang__) && __clang_major__ >= 5 || defined(__GNUC__) && __GNUC__ >= 9 || defined(_MSC_VER) && _MSC_VER >= 1920
++#if defined(__clang__) && __clang_major__ >= 5 || defined(__GNUC__) && __GNUC__ >= 8 || defined(_MSC_VER) && _MSC_VER >= 1920
+ #  define MAGIC_ENUM_SUPPORTED_CONSTEXPR_FOR 1
+ #endif
+ 
+diff -ur magic_enum-0.9.6/test/test_flags.cpp magic_enum-0.9.6_desired/test/test_flags.cpp
+--- magic_enum-0.9.6/test/test_flags.cpp	2024-06-29 19:47:06.000000000 +0530
++++ magic_enum-0.9.6_desired/test/test_flags.cpp	2024-09-22 21:34:33.232592122 +0530
+@@ -692,7 +692,7 @@
+   }
+ }
+ 
+-#if defined(__clang__) && __clang_major__ >= 5 || defined(__GNUC__) && __GNUC__ >= 9 || defined(_MSC_VER) && _MSC_VER >= 1920
++#if defined(__clang__) && __clang_major__ >= 5 || defined(__GNUC__) && __GNUC__ >= 8 || defined(_MSC_VER) && _MSC_VER >= 1920
+ #  define MAGIC_ENUM_SUPPORTED_CONSTEXPR_FOR 1
+ #endif
+ 
