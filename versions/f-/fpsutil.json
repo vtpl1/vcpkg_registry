@@ -4,6 +4,11 @@
       "git-tree": "a20dfd45eea0beb71ec2455c2395fac263427a64",
       "version": "2.2.0",
       "port-version": 0
+    },
+    {
+      "git-tree": "92c541ffa4d0b614524e8a91e1533aa30d03cf1a",
+      "version": "2.3.0",
+      "port-version": 0
     }
   ]
 }
