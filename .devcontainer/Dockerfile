@@ -10,6 +10,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
     curl wget git \
     zip unzip tar \
     ca-certificates \
+    pkg-config \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
