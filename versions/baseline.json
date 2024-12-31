@@ -16,6 +16,10 @@
       "baseline": "3.0.0",
       "port-version": 0
     },
+    "framestatutil": {
+      "baseline": "0.0.2",
+      "port-version": 0
+    },
     "logutil": {
       "baseline": "3.2.0",
       "port-version": 0
