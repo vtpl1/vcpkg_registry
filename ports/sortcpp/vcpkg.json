@@ -1,0 +1,10 @@
+{
+  "name": "sortcpp",
+  "version": "0.3.0",
+  "dependencies": [
+    {
+      "name": "opencv4",
+      "default-features": false
+    }
+  ]
+}

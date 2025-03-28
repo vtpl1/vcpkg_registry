@@ -36,6 +36,10 @@
       "baseline": "4.2.0",
       "port-version": 0
     },
+    "sortcpp": {
+      "baseline": "0.3.0",
+      "port-version": 0
+    },
     "uriparseutil": {
       "baseline": "3.2.0",
       "port-version": 0
