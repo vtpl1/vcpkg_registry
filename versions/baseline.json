@@ -9,7 +9,7 @@
       "port-version": 0
     },
     "fpsutil": {
-      "baseline": "3.0.0",
+      "baseline": "3.1.0",
       "port-version": 0
     },
     "frameutil": {
@@ -41,7 +41,7 @@
       "port-version": 0
     },
     "uriparseutil": {
-      "baseline": "4.0.0",
+      "baseline": "4.1.0",
       "port-version": 0
     }
   }
