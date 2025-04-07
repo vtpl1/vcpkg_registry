@@ -41,7 +41,7 @@
       "port-version": 0
     },
     "uriparseutil": {
-      "baseline": "4.1.0",
+      "baseline": "4.3.0",
       "port-version": 0
     }
   }
