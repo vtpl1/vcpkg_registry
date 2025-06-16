@@ -33,7 +33,7 @@
       "port-version": 0
     },
     "queueutil": {
-      "baseline": "7.0.0",
+      "baseline": "7.1.0",
       "port-version": 0
     },
     "sortcpp": {
