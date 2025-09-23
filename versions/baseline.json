@@ -5,7 +5,7 @@
       "port-version": 0
     },
     "fileutil": {
-      "baseline": "2.0.0",
+      "baseline": "2.1.0",
       "port-version": 0
     },
     "fpsutil": {
