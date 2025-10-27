@@ -64,6 +64,11 @@
       "git-tree": "3f949467ac60c05daedbb01dfd36881752ce1fe1",
       "version": "5.1.0",
       "port-version": 0
-    }    
+    },
+    {
+      "git-tree": "c463b8a2fa9c4a2d807ab86b3d2fb444d0b34614",
+      "version": "5.2.0",
+      "port-version": 0
+    }
   ]
 }
