@@ -1,0 +1,9 @@
+{
+  "name": "checkhardware",
+  "version": "0.0.1",
+  "description": "Check Avaialable GPU details",
+  "homepage": "http://github.com/vtpl1/check-hardware",
+  "dependencies": [
+    "opencl"
+  ]
+}

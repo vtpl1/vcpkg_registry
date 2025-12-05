@@ -89,6 +89,11 @@
       "git-tree": "fc24f4808691735a2a88dc074a919ab5645ce8b2",
       "version": "8.1.0",
       "port-version": 0
+    },
+    {
+      "git-tree": "6268828da9584cdf4afa439047146869251be79e",
+      "version": "8.2.0",
+      "port-version": 0
     }
   ]
 }
