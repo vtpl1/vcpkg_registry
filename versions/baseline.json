@@ -9,15 +9,15 @@
       "port-version": 0
     },
     "fpsutil": {
-      "baseline": "3.1.0",
-      "port-version": 0
-    },
-    "frameutil": {
       "baseline": "3.3.0",
       "port-version": 0
     },
     "framestatutil": {
       "baseline": "0.0.2",
+      "port-version": 0
+    },
+    "frameutil": {
+      "baseline": "3.3.0",
       "port-version": 0
     },
     "logutil": {
