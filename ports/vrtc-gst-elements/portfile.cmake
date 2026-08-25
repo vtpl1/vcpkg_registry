@@ -20,7 +20,7 @@
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
     URL "https://github.com/vtpl1/vrtc-gst-elements.git"
-    REF 0e9337676e208a9617c3d5bcd11496d19d5ffe86
+    REF a052ddb03bfe1f005dd39306ea0b84740b644705
 )
 
 vcpkg_cmake_configure(SOURCE_PATH "${SOURCE_PATH}")
