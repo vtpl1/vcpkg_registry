@@ -1,0 +1,17 @@
+{
+  "name": "vrtc-gst-wire",
+  "version": "0.0.1",
+  "description": "vtplsrc / vtplsink - the vrpc GStreamer source and sink elements",
+  "homepage": "https://github.com/vtpl1/vrtc-gst-wire",
+  "license": "Apache-2.0",
+  "dependencies": [
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
+  ]
+}
