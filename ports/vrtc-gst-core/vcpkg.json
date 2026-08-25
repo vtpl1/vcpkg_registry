@@ -1,6 +1,6 @@
 {
   "name": "vrtc-gst-core",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Platform-neutral analytics core: taxonomy, crop sink + JPEG encode, track/face registries, telemetry snapshot",
   "homepage": "https://github.com/vtpl1/vrtc-gst-core",
   "license": "Apache-2.0",
@@ -14,6 +14,9 @@
       "name": "vcpkg-cmake-config",
       "host": true
     },
-    "vrtc-gst-contract"
+    {
+      "name": "vrtc-gst-contract",
+      "version>=": "0.3.0"
+    }
   ]
 }
