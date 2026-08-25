@@ -1,0 +1,16 @@
+vtpl-dependency-floor ships data, not a library. There is nothing to
+find_package() and nothing to link.
+
+The floor is installed at:
+
+    ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/share/vtpl-dependency-floor/dependency-floor.json
+
+Read it to verify that this manifest's builtin-baseline and overrides restate the
+programme floor. vcpkg cannot do that for you: builtin-baseline and overrides are
+honoured only in the top-level manifest, so a port cannot hand its pins down and
+every consumer has to restate them. This file is what a consumer's check compares
+its restatement against.
+
+Check the RESOLVED versions too, not only the declared ones. A baseline bump can
+move protobuf or abseil with no override naming either, and the declared block
+will still look correct while the built binaries have moved.

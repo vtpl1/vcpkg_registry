@@ -1,0 +1,83 @@
+{
+  "$comment": [
+    "THE ONE DEPENDENCY FLOOR, as data. THIS FILE IS THE CANONICAL COPY.",
+    "",
+    "Every repo in the shared-element programme — vrtc-pipeline, gst_vtpl_src, and",
+    "the five library repos — builds against these exact versions. See",
+    "docs/PLAN-shared-element-libraries.md in vtpl1/vrtc-pipeline.",
+    "",
+    "WHY A FILE AND NOT A CONVENTION. vcpkg honours 'builtin-baseline' and",
+    "'overrides' ONLY in the top-level manifest; a port's own overrides are",
+    "ignored. So the floor cannot be INHERITED by the consumers — it has to be",
+    "restated in each one's vcpkg.json and kept in step by a check rather than by",
+    "mechanism. This file is what those checks compare against.",
+    "",
+    "WHY IT LIVES INSIDE A PORT. The plan (T-20) called for a canonical copy in the",
+    "registry plus a metadata-only port mirroring it 'for discoverability'. That is",
+    "two copies of the thing whose entire purpose is to be the only copy, so they",
+    "are collapsed: the port directory IS the canonical location, and portfile.cmake",
+    "installs this file rather than fetching it. Consumers therefore read it OFFLINE",
+    "from vcpkg_installed/<triplet>/share/vtpl-dependency-floor/ after resolution,",
+    "with no network in the check and no vendored duplicate to drift. Editing the",
+    "floor is a version bump of this port, which is correct: consumers pin it.",
+    "",
+    "WHY THESE VERSIONS. Not because they are newest, but because they are the",
+    "only set already proven on the predecessor's entire effective target set:",
+    "Ubuntu 22.04 (DS 7.0), Ubuntu 24.04 (DS 8.0), Intel DL Streamer, the SDK-free",
+    "CPU image, and Windows MSVC. gst_vtpl_src pins grpc 1.51.1 / protobuf 3.21.12",
+    "/ abseil 20230802.1 against a 2023 baseline, and moving vrtc-pipeline down to",
+    "meet it would sacrifice the Windows port and two years of transitive security",
+    "fixes. It also erases a real portability defect: vtpl_grpc_args.h includes",
+    "<grpc/impl/channel_arg_names.h>, which did not exist before gRPC ~1.57.",
+    "",
+    "PROVENANCE. A vcpkg checkout provisioned from scratch at VCPKG_REF resolved",
+    "grpc 1.76.0#1 / openssl 3.6.2 / protobuf 6.33.4#1 / abseil 20260107.1#2 —",
+    "this floor exactly. Measured 2026-08-25 on a freshly-provisioned Windows box,",
+    "so the numbers below are an observation and not an aspiration.",
+    "",
+    "MOVING THE FLOOR is a programme-level decision, not a repo-level one: bump it",
+    "here, bump this port's version, then update every consumer, in one change. The",
+    "predecessor additionally cannot move until the five prebuilt binaries in its",
+    "thirdparty/ that carry gRPC/protobuf/abseil symbols are rebuilt — the plan's",
+    "T-22. That work is the real gate, and it lives outside both repos.",
+    "",
+    "NOT HERE YET: the Windows triplet. It is a pin with exactly this shape — vcpkg",
+    "will not let a port hand one down, so it gets restated per consumer — and it",
+    "has already been copied by hand once (vrtc-vrpc's test/one-module/triplets/).",
+    "It lands here when the plan's T-14 chooses between x64-windows-vrtc and the",
+    "predecessor's x64-mixed. Adding an undecided value would be worse than the gap."
+  ],
+  "floor": {
+    "vcpkg": {
+      "ref": "2026.04.27",
+      "builtin-baseline": "56bb2411609227288b70117ead2c47585ba07713"
+    },
+    "cmake": {
+      "minimum": "4.3.2"
+    },
+    "ports": {
+      "grpc": {
+        "version": "1.76.0",
+        "port-version": 1,
+        "override": true
+      },
+      "openssl": {
+        "version": "3.6.2",
+        "override": true
+      },
+      "protobuf": {
+        "version": "6.33.4",
+        "resolved-only": true
+      },
+      "abseil": {
+        "version": "20260107.1",
+        "resolved-only": true
+      }
+    }
+  },
+  "$notes": {
+    "override": "Restated in each consumer's vcpkg.json 'overrides' block, because vcpkg ignores a port's own overrides.",
+    "resolved-only": "Not pinned by an override — it follows from the baseline plus grpc's dependency graph. Recorded so a baseline bump that silently moves protobuf or abseil is visible as drift rather than as a surprise at link time on Windows.",
+    "consumers": "Read the INSTALLED copy at share/vtpl-dependency-floor/dependency-floor.json in your vcpkg_installed tree, not a vendored one. A repo that cannot yet depend on this port (because taking the private registry as a dependency would break credential-less builds) may hold a mirror, but must check it against this file — vrtc-pipeline's scripts/check_floor_mirror.sh is that check."
+  }
+}
