@@ -20,9 +20,15 @@
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
     URL "https://github.com/vtpl1/vrtc-gst-core.git"
-    REF 55e30f032ef90dbfa885a39adbeae51694569205
+    REF 9c38f335270bcc90d18efeb96e2b30fba70d1189
 )
 
+# GStreamer arrives through pkg-config (glib only — this package uses no
+# GStreamer element API); libjpeg-turbo and vrtc-gst-contract are declared in
+# vcpkg.json. Declaring libjpeg-turbo is load-bearing rather than tidy: without
+# it find_package(JPEG) falls through to the SYSTEM libjpeg, which
+# ABI-mismatches the encoder and longjmps on every crop — silently, with a green
+# build. Measured on a standalone configure that resolved JPEG_LIB_VERSION 80.
 vcpkg_cmake_configure(SOURCE_PATH "${SOURCE_PATH}")
 vcpkg_cmake_install()
 vcpkg_cmake_config_fixup(PACKAGE_NAME vrtc-gst-core CONFIG_PATH "share/vrtc-gst-core")
