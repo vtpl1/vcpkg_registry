@@ -20,9 +20,14 @@
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
     URL "https://github.com/vtpl1/vrtc-gst-contract.git"
-    REF 8981f2d070edafe57fb813d9af46eb74bbe448be
+    REF 31ebf3fd102dd12e939e9826c001730d6581a1dd
 )
 
+# GStreamer arrives through pkg-config, not vcpkg, so the port declares no
+# dependency for it and the consumer's environment must supply it. The package's
+# own config file re-finds gstreamer-1.0 and gstreamer-video-1.0 and fails with
+# a message naming THIS package if it cannot — which is the difference between a
+# build box without GStreamer development files and a broken port.
 vcpkg_cmake_configure(SOURCE_PATH "${SOURCE_PATH}")
 vcpkg_cmake_install()
 vcpkg_cmake_config_fixup(PACKAGE_NAME vrtc-gst-contract CONFIG_PATH "share/vrtc-gst-contract")
