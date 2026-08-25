@@ -45,15 +45,15 @@
       "port-version": 0
     },
     "vrtc-gst-contract": {
-      "baseline": "0.2.1",
+      "baseline": "0.3.0",
       "port-version": 0
     },
     "vrtc-gst-core": {
-      "baseline": "0.1.0",
+      "baseline": "0.2.0",
       "port-version": 0
     },
     "vrtc-gst-elements": {
-      "baseline": "0.1.1",
+      "baseline": "0.2.0",
       "port-version": 0
     },
     "vrtc-gst-wire": {
