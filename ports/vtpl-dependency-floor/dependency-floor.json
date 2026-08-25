@@ -41,11 +41,12 @@
     "thirdparty/ that carry gRPC/protobuf/abseil symbols are rebuilt — the plan's",
     "T-22. That work is the real gate, and it lives outside both repos.",
     "",
-    "NOT HERE YET: the Windows triplet. It is a pin with exactly this shape — vcpkg",
-    "will not let a port hand one down, so it gets restated per consumer — and it",
-    "has already been copied by hand once (vrtc-vrpc's test/one-module/triplets/).",
-    "It lands here when the plan's T-14 chooses between x64-windows-vrtc and the",
-    "predecessor's x64-mixed. Adding an undecided value would be worse than the gap."
+    "THE WINDOWS TRIPLET IS HERE TOO, and for the same reason as the versions: it",
+    "is a pin vcpkg will not let a port hand down, so every consumer restates it",
+    "and only a check keeps them in step. It had already been copied by hand once.",
+    "vcpkg reads a triplet at RESOLVE time, before any port is installed, so this",
+    "port cannot ship the .cmake file usefully — it ships the SETTINGS as data and",
+    "each repo's triplet file is checked against them."
   ],
   "floor": {
     "vcpkg": {
@@ -73,11 +74,22 @@
         "version": "20260107.1",
         "resolved-only": true
       }
+    },
+    "windows_triplet": {
+      "name": "x64-windows-vrtc",
+      "VCPKG_TARGET_ARCHITECTURE": "x64",
+      "VCPKG_CRT_LINKAGE": "dynamic",
+      "VCPKG_LIBRARY_LINKAGE": "dynamic",
+      "VCPKG_BUILD_TYPE": "release",
+      "port_linkage_overrides": {
+        "openssl": "static"
+      }
     }
   },
   "$notes": {
     "override": "Restated in each consumer's vcpkg.json 'overrides' block, because vcpkg ignores a port's own overrides.",
     "resolved-only": "Not pinned by an override — it follows from the baseline plus grpc's dependency graph. Recorded so a baseline bump that silently moves protobuf or abseil is visible as drift rather than as a surprise at link time on Windows.",
-    "consumers": "Read the INSTALLED copy at share/vtpl-dependency-floor/dependency-floor.json in your vcpkg_installed tree, not a vendored one. A repo that cannot yet depend on this port (because taking the private registry as a dependency would break credential-less builds) may hold a mirror, but must check it against this file — vrtc-pipeline's scripts/check_floor_mirror.sh is that check."
+    "consumers": "Read the INSTALLED copy at share/vtpl-dependency-floor/dependency-floor.json in your vcpkg_installed tree, not a vendored one. A repo that cannot yet depend on this port (because taking the private registry as a dependency would break credential-less builds) may hold a mirror, but must check it against this file — vrtc-pipeline's scripts/check_floor_mirror.sh is that check.",
+    "windows_triplet": "Settled 2026-08-25 (plan T-14 / decision 6), against gst_vtpl_src's x64-mixed. NOT a preference: x64-mixed is static-by-default with nine dynamic exceptions, and protobuf is not among them, so protobuf links STATICALLY there — which gives each module its own descriptor pool and makes a duplicate descriptor table SILENT. Under x64-windows-vrtc protobuf is shared (measured: libprotobuf.dll and abseil_dll.dll in the WIN-0 deploy inventory, and no gRPC DLL at all), so there is one pool per process and a duplicate registration aborts with 'File already exists in database'. That is precisely the failure the programme's WIN-1 gate exists to catch, so x64-mixed would make the gate pass vacuously. The static-OpenSSL clause is separately load-bearing: GStreamer ships its own libcrypto-3-x64.dll / libssl-3-x64.dll under the filenames vcpkg builds, and Windows resolves DLLs by name process-wide. COST, recorded honestly: gst_vtpl_src's Windows build (JenkinsfileAll, not the matrix Jenkinsfile, which excludes every Windows combination) must move, flipping poco, opencv and the rest from static to dynamic. Fold that into the manifest re-resolve the floor bump already forces."
   }
 }
