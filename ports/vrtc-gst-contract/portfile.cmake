@@ -20,7 +20,7 @@
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
     URL "https://github.com/vtpl1/vrtc-gst-contract.git"
-    REF 31ebf3fd102dd12e939e9826c001730d6581a1dd
+    REF c73f977bfbdd80710649502bd9dbc182b9e35683
 )
 
 # GStreamer arrives through pkg-config, not vcpkg, so the port declares no
