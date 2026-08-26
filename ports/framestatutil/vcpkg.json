@@ -1,7 +1,11 @@
 {
   "name": "framestatutil",
   "version": "0.0.2",
+  "port-version": 1,
   "description": "Frame parse util",
   "homepage": "http://github.com/vtpl1/framestatutil",
-  "dependencies": ["spdlog", "fmt"]
+  "dependencies": [
+    "fmt",
+    "spdlog"
+  ]
 }

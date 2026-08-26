@@ -1,6 +1,7 @@
 {
   "name": "vrtc-gst-elements",
   "version": "0.3.1",
+  "port-version": 1,
   "description": "The seven vendor-free GStreamer analytics elements (vtplfps, vtplfpscap, vtplfpsdecimate, vtplframelimit, vtplobjectcrop, vtplpvameta, vtpltelemetry)",
   "homepage": "https://github.com/vtpl1/vrtc-gst-elements",
   "license": "Apache-2.0",

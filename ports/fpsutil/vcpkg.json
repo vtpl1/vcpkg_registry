@@ -1,6 +1,7 @@
 {
   "name": "fpsutil",
   "version": "3.3.1",
+  "port-version": 1,
   "description": "Fps util",
   "homepage": "http://github.com/fpsutil",
   "dependencies": [

@@ -1,6 +1,7 @@
 {
   "name": "vrtc-gst-core",
   "version": "0.3.0",
+  "port-version": 1,
   "description": "Platform-neutral analytics core: taxonomy, crop sink + JPEG encode, track/face registries, telemetry snapshot",
   "homepage": "https://github.com/vtpl1/vrtc-gst-core",
   "license": "Apache-2.0",

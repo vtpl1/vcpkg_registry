@@ -1,6 +1,7 @@
 {
   "name": "vrtc-gst-wire",
   "version": "0.1.0",
+  "port-version": 1,
   "description": "vtplsrc / vtplsink - the vrpc GStreamer source and sink elements",
   "homepage": "https://github.com/vtpl1/vrtc-gst-wire",
   "license": "Apache-2.0",

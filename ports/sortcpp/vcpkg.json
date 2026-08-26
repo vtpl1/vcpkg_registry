@@ -1,6 +1,7 @@
 {
   "name": "sortcpp",
   "version": "0.3.0",
+  "port-version": 1,
   "dependencies": [
     {
       "name": "opencv4",

@@ -18,13 +18,29 @@ set(VCPKG_BUILD_TYPE release)
 # vcpkg_from_github fetches an HTTPS tarball that returns 404 without a token.
 # Cloning goes through git's own credential helper instead. REF is a full commit
 # SHA because vcpkg_from_git requires one and a tag would move.
+# The REF is bound to a variable and passed on to the build, and that is the
+# whole point of it being here twice. vcpkg builds from an export with NO .git
+# in it, so the package cannot discover its own commit — it would report
+# "unknown" in exactly the situation traceability exists for. Passing the REF
+# makes THIS sha, the one actually cloned, the one the payload reports.
+#
+# IT MATTERS MORE HERE THAN ANYWHERE ELSE IN THE PROGRAMME. This package
+# compiles nothing: its version TU ships inside the src/ payload and is compiled
+# by the CONSUMER, long after this portfile has run. Whatever sha is resolved at
+# THIS moment is the only one that will ever be recorded — there is no later
+# build of ours to correct it.
+set(VRTC_VRPC_REF e69b18a2e7ba442388e58e81423294a1698ae0e7)
+
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
     URL "https://github.com/vtpl1/vrtc-vrpc.git"
-    REF 72b8a4f8bd8b3c8270a325c1b54c535e1a206e51
+    REF ${VRTC_VRPC_REF}
 )
 
-vcpkg_cmake_configure(SOURCE_PATH "${SOURCE_PATH}")
+vcpkg_cmake_configure(
+    SOURCE_PATH "${SOURCE_PATH}"
+    OPTIONS -DVRTC_PKG_GIT_SHA=${VRTC_VRPC_REF}
+)
 vcpkg_cmake_install()
 
 vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")

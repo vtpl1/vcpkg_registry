@@ -1,6 +1,7 @@
 {
   "name": "vrtc-gst-contract",
   "version": "0.4.0",
+  "port-version": 1,
   "description": "GstMeta + identity ABI shared by the vrtc GStreamer stacks (metas, ChannelIdentity, WireFrameInfo, PvaSample, vtpl URI)",
   "homepage": "https://github.com/vtpl1/vrtc-gst-contract",
   "license": "Apache-2.0",

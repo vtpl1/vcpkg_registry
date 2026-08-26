@@ -1,0 +1,44 @@
+# Line endings, and why this file has to exist.
+#
+# vcpkg's own tooling writes LF. `vcpkg format-manifest` emits LF unconditionally,
+# and `vcpkg x-add-version` refuses to process a port whose vcpkg.json does not
+# match what format-manifest would produce:
+#
+#     error: logutil is not properly formatted
+#     Run `vcpkg format-manifest ...` to format the file
+#
+# Every port manifest in this registry was CRLF - in the WORKING TREE and in the
+# committed blob - because the registry had no .gitattributes and a Windows clone
+# defaults to core.autocrlf=true. The content was already correct; the only
+# difference from format-manifest's output was the line endings, byte for byte:
+#
+#     {  \r  \n    "  n  a  m  e  " ...      <- committed
+#     {  \n        "  n  a  m  e  " ...      <- format-manifest
+#
+# WHAT THAT COST, and why it is worth a file rather than a note. The documented
+# way to update this registry is
+#
+#     vcpkg x-add-version --all
+#
+# (see the tutorial at learn.microsoft.com/vcpkg/produce/publish-to-a-git-registry).
+# With the manifests CRLF, `--all` SKIPS every port it considers unformatted and
+# then rewrites versions/baseline.json with only the ports it processed - silently
+# deleting the other thirteen. Run once, it removed envutil, fileutil, fpsutil,
+# framestatutil, frameutil, logutil, magic-enum, processutil, queueutil, sortcpp,
+# uriparseutil, vrtc-vrpc and vtpl-dependency-floor from the baseline. Every
+# consumer of those ports would have stopped resolving.
+#
+# So the recommended command was unusable here, and the reason was invisible:
+# nothing about a line ending appears in `git status`, or in a diff, or in the
+# error message, which says "not properly formatted" and means "not LF".
+#
+# eol=lf pins the WORKING TREE and not just the blob, so a Windows clone gets the
+# same bytes vcpkg's tools expect to find.
+* text=auto
+
+*.json    text eol=lf
+*.cmake   text eol=lf
+*.in      text eol=lf
+usage     text eol=lf
+*.patch   text eol=lf
+*.sh      text eol=lf

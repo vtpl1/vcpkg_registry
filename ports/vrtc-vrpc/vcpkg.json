@@ -1,13 +1,19 @@
 {
   "name": "vrtc-vrpc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "vrpc transport for the vrtc stack - SOURCE package: ships protos, PIMPL clients and the one-gRPC-module registry, which the consumer compiles into its own single module",
   "homepage": "https://github.com/vtpl1/vrtc-vrpc",
   "license": "Apache-2.0",
   "dependencies": [
     "grpc",
     "protobuf",
-    { "name": "vcpkg-cmake", "host": true },
-    { "name": "vcpkg-cmake-config", "host": true }
+    {
+      "name": "vcpkg-cmake",
+      "host": true
+    },
+    {
+      "name": "vcpkg-cmake-config",
+      "host": true
+    }
   ]
 }

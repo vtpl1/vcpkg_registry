@@ -1,6 +1,7 @@
 {
   "name": "envutil",
   "version": "1.0.4",
+  "port-version": 1,
   "description": "A simple wrapper of Poco Environment",
   "homepage": "https://github.com/vtpl1/envutil",
   "dependencies": [

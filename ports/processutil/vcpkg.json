@@ -1,7 +1,10 @@
 {
   "name": "processutil",
   "version": "1.2.0",
+  "port-version": 1,
   "description": "A simple wrapper Poco Process",
   "homepage": "https://github.com/vtpl1/processutil",
-  "dependencies": ["poco"]
+  "dependencies": [
+    "poco"
+  ]
 }
