@@ -1,7 +1,7 @@
 {
   "name": "vrtc-vrpc",
-  "version": "0.0.2",
-  "description": "vrpc transport for the vrtc stack - SOURCE package: ships protos, PIMPL clients and the one-gRPC-module registry, which the consumer compiles into its own single module",
+  "version": "0.1.0",
+  "description": "Every .proto and every gRPC translation unit in the vrtc stack, distributed as SOURCE so a consumer assembles exactly one gRPC module per process",
   "homepage": "https://github.com/vtpl1/vrtc-vrpc",
   "license": "Apache-2.0",
   "dependencies": [

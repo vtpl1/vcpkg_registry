@@ -29,7 +29,7 @@ set(VCPKG_BUILD_TYPE release)
 # by the CONSUMER, long after this portfile has run. Whatever sha is resolved at
 # THIS moment is the only one that will ever be recorded — there is no later
 # build of ours to correct it.
-set(VRTC_VRPC_REF e69b18a2e7ba442388e58e81423294a1698ae0e7)
+set(VRTC_VRPC_REF 63ae8efacaaabeee3f2e193b28507aab42f394c8)
 
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
