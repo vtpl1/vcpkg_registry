@@ -61,7 +61,7 @@
       "port-version": 1
     },
     "vrtc-gst-wire": {
-      "baseline": "0.2.0",
+      "baseline": "0.2.1",
       "port-version": 0
     },
     "vrtc-vrpc": {
