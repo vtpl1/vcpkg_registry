@@ -1,18 +1,10 @@
 {
   "name": "vrtc-gst-wire",
   "version": "0.2.1",
-  "description": "vtplsrc / vtplsink \u2014 the vrpc GStreamer source and sink elements. Ships the element library with ZERO gRPC bytes plus a function the consumer calls to build the plugin against its own single gRPC module",
+  "description": "vtplsrc / vtplsink — the vrpc GStreamer source and sink elements. Ships the element library with ZERO gRPC bytes plus a function the consumer calls to build the plugin against its own single gRPC module",
   "homepage": "https://github.com/vtpl1/vrtc-gst-wire",
   "license": "Apache-2.0",
   "dependencies": [
-    {
-      "name": "vrtc-vrpc",
-      "version>=": "0.1.0"
-    },
-    {
-      "name": "vrtc-gst-contract",
-      "version>=": "0.5.0"
-    },
     {
       "name": "vcpkg-cmake",
       "host": true
@@ -20,6 +12,14 @@
     {
       "name": "vcpkg-cmake-config",
       "host": true
+    },
+    {
+      "name": "vrtc-gst-contract",
+      "version>=": "0.5.0"
+    },
+    {
+      "name": "vrtc-vrpc",
+      "version>=": "0.1.0"
     }
   ]
 }
