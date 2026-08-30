@@ -54,19 +54,19 @@
     },
     "vrtc-gst-core": {
       "baseline": "1.1.2",
-      "port-version": 0
+      "port-version": 1
     },
     "vrtc-gst-elements": {
       "baseline": "1.1.1",
-      "port-version": 0
+      "port-version": 1
     },
     "vrtc-gst-wire": {
       "baseline": "1.0.1",
-      "port-version": 0
+      "port-version": 1
     },
     "vrtc-vrpc": {
       "baseline": "1.2.0",
-      "port-version": 0
+      "port-version": 1
     },
     "vtpl-dependency-floor": {
       "baseline": "1.2.1",
