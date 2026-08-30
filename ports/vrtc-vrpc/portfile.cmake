@@ -1,6 +1,4 @@
 # vrtc-vrpc — the vrpc transport, distributed as SOURCE.
-# Plan of record: docs/PLAN-shared-element-libraries.md §3.6 and §4.3 in
-# vtpl1/vrtc-pipeline.
 
 # This port INSTALLS FILES AND BUILDS NOTHING, which is the whole design. vcpkg
 # ships gRPC as a static library only, so a prebuilt archive here would become a
@@ -29,7 +27,7 @@ set(VCPKG_BUILD_TYPE release)
 # by the CONSUMER, long after this portfile has run. Whatever sha is resolved at
 # THIS moment is the only one that will ever be recorded — there is no later
 # build of ours to correct it.
-set(VRTC_VRPC_REF d4a3a571fc40edb2088b92b555ba09839852376e)
+set(VRTC_VRPC_REF ea585bfab64a961dcc1f649459d3f7a83c2a1926)
 
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
@@ -39,7 +37,13 @@ vcpkg_from_git(
 
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
+    # -DVRTC_PKG_VERSION: vcpkg's ${VERSION} is this port's manifest version, and the
+    # package cross-checks it against its own annotated tag. A vcpkg export has no
+    # .git, so the tag is unreachable in exactly the build that ships -- same reason
+    # VRTC_PKG_GIT_SHA is passed. Passing it keeps the port, the tag and
+    # project(VERSION) one number instead of three that merely agree today.
     OPTIONS -DVRTC_PKG_GIT_SHA=${VRTC_VRPC_REF}
+            -DVRTC_PKG_VERSION=${VERSION}
 )
 vcpkg_cmake_install()
 

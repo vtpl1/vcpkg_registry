@@ -1,5 +1,4 @@
 # vrtc-gst-contract — part of the vrtc shared-element programme.
-# Plan of record: docs/PLAN-shared-element-libraries.md in vtpl1/vrtc-pipeline.
 
 # vcpkg_from_git, NOT vcpkg_from_github, and that is load-bearing.
 #
@@ -7,7 +6,7 @@
 # https://github.com/<repo>/archive/<ref>.tar.gz over plain HTTPS, which for a
 # private repo returns 404 to any caller without a token — measured, not
 # assumed. vcpkg_from_git CLONES instead, so it goes through git's own
-# credential helper, which every box that can clone vrtc-pipeline already has
+# credential helper, which every box that can clone these repos already has
 # configured. No token needs to be planted in vcpkg's environment, and none
 # needs to be baked into an image.
 #
@@ -23,7 +22,7 @@
 # "unknown" in exactly the situation traceability exists for. Passing the REF
 # makes THIS sha, the one actually cloned, the one the binary reports. One
 # source, so the two can never disagree.
-set(VRTC_GST_REF e5872612ce9c9ab45a2ba7768d97883283e1f8fc)
+set(VRTC_GST_REF 24e1896672de1efcaf4b9467a9f8fa65abb448a9)
 
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
@@ -38,7 +37,13 @@ vcpkg_from_git(
 # build box without GStreamer development files and a broken port.
 vcpkg_cmake_configure(
     SOURCE_PATH "${SOURCE_PATH}"
+    # -DVRTC_PKG_VERSION: vcpkg's ${VERSION} is this port's manifest version, and the
+    # package cross-checks it against its own annotated tag. A vcpkg export has no
+    # .git, so the tag is unreachable in exactly the build that ships -- same reason
+    # VRTC_PKG_GIT_SHA is passed. Passing it keeps the port, the tag and
+    # project(VERSION) one number instead of three that merely agree today.
     OPTIONS -DVRTC_PKG_GIT_SHA=${VRTC_GST_REF}
+            -DVRTC_PKG_VERSION=${VERSION}
 )
 vcpkg_cmake_install()
 vcpkg_cmake_config_fixup(PACKAGE_NAME vrtc-gst-contract CONFIG_PATH "share/vrtc-gst-contract")

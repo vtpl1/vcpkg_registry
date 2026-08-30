@@ -1,5 +1,4 @@
 # vtpl-dependency-floor — the floor itself, shipped as data.
-# Plan of record: docs/PLAN-shared-element-libraries.md T-20 in vtpl1/vrtc-pipeline.
 
 # THIS PORT COMPILES NOTHING AND FETCHES NOTHING.
 #
