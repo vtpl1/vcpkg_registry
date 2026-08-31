@@ -1,6 +1,7 @@
 {
   "name": "vrtc-vrpc",
   "version": "1.2.1",
+  "port-version": 1,
   "description": "Every .proto and every gRPC translation unit in the vrtc stack, distributed as SOURCE so a consumer assembles exactly one gRPC module per process",
   "homepage": "https://github.com/vtpl1/vrtc-vrpc",
   "license": "Apache-2.0",
@@ -21,7 +22,7 @@
     },
     {
       "name": "vrtc-gst-core",
-      "version>=": "1.1.2"
+      "version>=": "1.1.3"
     }
   ]
 }
