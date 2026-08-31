@@ -28,7 +28,7 @@
 # discover. Now that the version is generated from git like its siblings', the
 # omission would have made every released vrtc-gst-wire report sha "unknown",
 # origin "unknown": provenance that is absent precisely in the builds that ship.
-set(VRTC_GST_REF 1663979b1b226d59c5906b03b2d9c5ceaad0749c)
+set(VRTC_GST_REF b7cb6bb50e501b68c535bab49dc642c0fed68e45)
 
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
