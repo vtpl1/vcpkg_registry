@@ -22,7 +22,7 @@
 # "unknown" in exactly the situation traceability exists for. Passing the REF
 # makes THIS sha, the one actually cloned, the one the binary reports. One
 # source, so the two can never disagree.
-set(VRTC_GST_REF 22b8c273a09961be2e03f83c199d7bb7d1c28cf0)
+set(VRTC_GST_REF 53217dee620fa8423878d43ecb04acef388af430)
 
 vcpkg_from_git(
     OUT_SOURCE_PATH SOURCE_PATH
