@@ -49,7 +49,7 @@
       "port-version": 1
     },
     "vrtc-gst-contract": {
-      "baseline": "1.0.2",
+      "baseline": "1.1.0",
       "port-version": 0
     },
     "vrtc-gst-core": {
