@@ -44,6 +44,24 @@
     "cheapest shape a floor move can have. Both were measured before the bump, not",
     "discovered after it - which is what the resolved-only entries are FOR.",
     "",
+    "MOVED 2026-09-19, openssl 3.6.2 -> 3.6.3. NOT an upgrade past the baseline: at",
+    "9e593bb1 (tag 2026.07.29) vcpkg's own baseline.json already says openssl 3.6.3,",
+    "so the override was pinning the programme one patch BELOW what every consumer",
+    "would otherwise resolve. It held that value across the 2026-08-26 baseline move",
+    "-- which is what an override is for -- and nothing recorded a reason to stay",
+    "there, so this releases it to the baseline rather than raising it above one.",
+    "grpc's override is untouched and still deliberate: the baseline offers 1.81.1,",
+    "which deprecates grpc::experimental::IdentityKeyCertPair while still using it",
+    "from its own non-deprecated inline header code.",
+    "",
+    "WHY IT MOVED. openssl is in grpc's dependency graph, and a vcpkg ABI hash folds",
+    "in each dependency's ABI (see the openssl line in any port's vcpkg_abi_info.txt),",
+    "so a consumer resolving openssl 3.6.3 gets a DIFFERENT grpc ABI from one pinned",
+    "to 3.6.2 -- and therefore no shared binary-cache entry for grpc, the most",
+    "expensive port in the set. The two versions are a patch apart within 3.6.x, and",
+    "the Windows triplet's static-OpenSSL clause is unaffected: that turns on 3.5.0",
+    "lacking CRYPTO_calloc, which 3.6 added, so both sit on the same side of it.",
+    "",
     "MOVING THE FLOOR is a programme-level decision, not a repo-level one: bump it",
     "here, bump this port's version, then update every consumer, in one change. The",
     "predecessor additionally cannot move until the five prebuilt binaries in its",
@@ -72,7 +90,7 @@
         "override": true
       },
       "openssl": {
-        "version": "3.6.2",
+        "version": "3.6.3",
         "override": true
       },
       "protobuf": {
